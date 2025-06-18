@@ -51,7 +51,7 @@ public class BinaryTree {
             System.out.print(node.getValue() + ", ");
             printPreorderRec(node.getRefIzquierda());
             printPreorderRec(node.getRefDerecha());
-        } 
+        }
     }
 
     private void printPosOrderRec(Nodo node) {
@@ -59,7 +59,7 @@ public class BinaryTree {
             printPosOrderRec(node.getRefIzquierda());
             printPosOrderRec(node.getRefDerecha());
             System.out.print(node.getValue() + ", ");
-        } 
+        }
     }
 
     private void printInOrderRec(Nodo node) {
@@ -67,7 +67,27 @@ public class BinaryTree {
             printInOrderRec(node.getRefIzquierda());
             System.out.print(node.getValue() + ", ");
             printInOrderRec(node.getRefDerecha());
-        } 
+        }
     }
 
+    public boolean findValue(int value) {
+
+        return findValueRec(root, value);
+    }
+
+    public boolean findValueRec(Nodo nodo, int value) {
+        if (nodo == null) {
+            return false;
+        }
+
+        if (nodo.getValue() == value) {
+            return true;
+        }
+
+        if (value < nodo.getValue()) {
+            return findValueRec(nodo.getRefIzquierda(), value);
+        } else {
+            return findValueRec(nodo.getRefDerecha(), value);
+        }
+    }
 }
