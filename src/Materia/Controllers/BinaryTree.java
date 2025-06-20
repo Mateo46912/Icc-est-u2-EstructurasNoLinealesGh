@@ -1,24 +1,34 @@
 package Materia.Controllers;
 
+import java.util.List;
+import java.util.Stack;
+
+
 import Materia.Models.Nodo;
 
 public class BinaryTree {
 
     private Nodo root;
+    private int heighArbolM;
+    private Stack<Nodo> desequilibrados;
 
+    
     public BinaryTree() {
         this.root = null;
+        this.heighArbolM = 0; 
+        this.desequilibrados = new Stack<>();
     }
 
     public void insert(int value) {
 
         root = insertRec(root, value);
-
+        heighArbolM++;
     }
 
     private Nodo insertRec(Nodo padre, int value) {
 
         if (padre == null) {
+      
             return new Nodo(value); // Retornar un Nodo con el nuevo valor para la raiz
         }
 
@@ -46,6 +56,14 @@ public class BinaryTree {
         printInOrderRec(root);
     }
 
+    public void printInOrderWhitHeight() {
+        printInOrderWithHeightRec(root);
+    }
+
+    public void printInorderWithEqu() {
+        printInorderWithEquRec(root);
+    }
+
     private void printPreorderRec(Nodo node) {
         if (node != null) {
             System.out.print(node.getValue() + ", ");
@@ -70,8 +88,50 @@ public class BinaryTree {
         }
     }
 
-    public boolean findValue(int value) {
+    private void printInOrderWithHeightRec(Nodo node) {
+        if (node != null) {
+            printInOrderWithHeightRec(node.getRefIzquierda());
+            System.out.print(node.getValue() + "(h= " + getHeightTreeRec(node) + "), ");
+            printInOrderWithHeightRec(node.getRefDerecha());
+        }
+    }
 
+    private void printInorderWithEquRec(Nodo node) {
+        if (node != null) {
+            printInorderWithEquRec(node.getRefIzquierda());
+            int balance = getBalanceFactor(node);
+            if(balance <-1 | balance>1){
+                desequilibrados.push(node);
+            }
+            System.out.print(node.getValue() + "(bF= " + balance + "), ");
+            printInorderWithEquRec(node.getRefDerecha());
+        }
+    }
+
+    public int getBalanceFactor(Nodo node) {
+        if (node == null) {
+            return 0;
+        }
+        int leftHeight = getHeightTreeRec(node.getRefIzquierda());
+        int rightHeight = getHeightTreeRec(node.getRefDerecha());
+        return leftHeight - rightHeight;
+    }
+
+    public boolean desequilibradosComp(){ 
+       if(desequilibrados.isEmpty()){
+        return true;
+       }else{
+           return false;
+       } 
+    } 
+
+
+
+    public int heighArbol() {
+        return heighArbolM;
+    }
+
+    public boolean findValue(int value) {
         return findValueRec(root, value);
     }
 
@@ -90,4 +150,19 @@ public class BinaryTree {
             return findValueRec(nodo.getRefDerecha(), value);
         }
     }
+
+    public int getHeightTree() {
+        return getHeightTreeRec(root);
+    }
+
+    public int getHeightTreeRec(Nodo nodo) {
+
+        if (nodo == null) {
+            return 0;
+        }
+        int leftHeight = getHeightTreeRec(nodo.getRefIzquierda());
+        int rightHeight = getHeightTreeRec(nodo.getRefDerecha());
+        return Math.max(leftHeight, rightHeight) + 1;
+    }
+
 }
