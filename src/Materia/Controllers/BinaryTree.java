@@ -19,6 +19,7 @@ public class BinaryTree {
         this.desequilibrados = new Stack<>();
     }
 
+    //METODO PARA INSERTAR EN EL ARBOL
     public void insert(int value) {
 
         root = insertRec(root, value);
@@ -26,7 +27,6 @@ public class BinaryTree {
     }
 
     private Nodo insertRec(Nodo padre, int value) {
-
         if (padre == null) {
       
             return new Nodo(value); // Retornar un Nodo con el nuevo valor para la raiz
@@ -40,10 +40,10 @@ public class BinaryTree {
             padre.setRefDerecha(insertRec(padre.getRefDerecha(), value)); // Lo mismo
 
         }
-
         return padre;
     }
 
+    //METODO PARA RECORRER Y MOSTRAR EL ARBOL
     public void printPreorder() {
         printPreorderRec(root);
     }
@@ -108,6 +108,7 @@ public class BinaryTree {
         }
     }
 
+    //METODO PARA HALLAR EL BALANCE DEL ARBOL
     public int getBalanceFactor(Nodo node) {
         if (node == null) {
             return 0;
@@ -139,11 +140,9 @@ public class BinaryTree {
         if (nodo == null) {
             return false;
         }
-
         if (nodo.getValue() == value) {
             return true;
         }
-
         if (value < nodo.getValue()) {
             return findValueRec(nodo.getRefIzquierda(), value);
         } else {

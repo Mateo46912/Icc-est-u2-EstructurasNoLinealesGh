@@ -4,6 +4,7 @@ public class Nodo {
     private int value;
     private Nodo refIzquierda;
     private Nodo refDerecha;
+    private int height;
 
     public Nodo(int value) {
         this.value = value;
@@ -34,7 +35,15 @@ public class Nodo {
     public void setRefDerecha(Nodo refDerecha) {
         this.refDerecha = refDerecha;
     }
-
+    
+    public int getHeight() {
+        return height;
+    }
+    
+    public void setHeight(int height) {
+        this.height = height;
+    }
+    
     @Override
     public String toString() {
         return "Nodo [value=" + value + "]";
